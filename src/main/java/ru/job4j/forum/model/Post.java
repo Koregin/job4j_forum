@@ -1,6 +1,5 @@
 package ru.job4j.forum.model;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -8,14 +7,11 @@ public class Post {
     private int id;
     private String name;
     private String description;
-    private Date created;
+    private Date created = new Date(System.currentTimeMillis());
 
-    public Post() {
-        this.created = new Date(System.currentTimeMillis());
-    }
-
-    public static Post of(String name) {
+    public static Post of(int id, String name) {
         Post post = new Post();
+        post.id = id;
         post.name = name;
         return post;
     }

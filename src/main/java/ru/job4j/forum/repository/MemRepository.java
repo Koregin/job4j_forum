@@ -5,36 +5,34 @@ import ru.job4j.forum.model.Post;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class MemRepository {
-    private final List<Post> posts = new ArrayList<>();
-    private final AtomicInteger counter = new AtomicInteger();
+    private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
+    private final AtomicInteger counter = new AtomicInteger(2);
 
     public MemRepository() {
-        Post post = Post.of("Продаю машину ладу 01.");
-        post.setId(counter.incrementAndGet());
-        Post post2 = Post.of("Продаю машину BMW X6.");
-        post2.setId(counter.incrementAndGet());
-        posts.add(post);
-        posts.add(post2);
+        posts.put(1, Post.of(1, "Продаю машину ладу 01."));
+        posts.put(2, Post.of(2, "Продаю машину BMW X6."));
     }
 
     public List<Post> getAll() {
-        return posts;
+        return new ArrayList<>(posts.values());
     }
 
     public void save(Post post) {
-        if (!posts.contains(post)) {
+        if (post.getId() == 0) {
             post.setId(counter.incrementAndGet());
-            posts.add(post);
+            posts.put(post.getId(), post);
         } else {
-            posts.set(post.getId() - 1, post);
+            posts.computeIfPresent(post.getId(), (id, oldPost) -> post);
         }
     }
 
     public Post findById(int postId) {
-        return posts.get(postId - 1);
+        return posts.get(postId);
     }
 }
