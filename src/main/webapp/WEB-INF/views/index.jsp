@@ -24,6 +24,10 @@
 </head>
 <body>
 <div class="container mt-3">
+    <div>
+        Вы вошли как : ${user.username} |
+        <a href="<c:url value='/logout'/>">Выйти из приложения</a>
+    </div>
     <div class="row">
         <h4>Форум job4j</h4>
     </div>
