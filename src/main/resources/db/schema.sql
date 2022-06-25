@@ -18,9 +18,6 @@ CREATE TABLE if not exists users (
   authority_id int not null references authorities(id)
 );
 
-insert into posts (name) values ('О чем этот форум?');
-insert into posts (name) values ('Правила форума.');
-
 insert into authorities (authority) values ('ROLE_USER');
 insert into authorities (authority) values ('ROLE_ADMIN');
 

@@ -32,8 +32,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                                 + "where u.username = ? and u.authority_id = a.id");
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
+    @Bean(name = "passwordEncoder")
+    public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
